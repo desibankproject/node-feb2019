@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+
+	function clearMessage(){
+		document.getElementById("errorMessage").innerHTML="";
+	}	
+	
+
+	function validate(){
+		console.log(")@@(@(@(((((((((((((((((((((validate is called)))))))))))))))))))))))");
+		var titlev=document.movieForm.title.value;
+		if(titlev.length==0){
+			var spanObj=document.getElementById("errorMessage");
+			spanObj.innerHTML="Sorry! title cannot be blank.............";
+			document.movieForm.title.focus();
+			return;
+		}
+		var directorv=document.movieForm.director.value;
+		if(directorv.length==0){
+			var spanObj=document.getElementById("errorMessage");
+			spanObj.innerHTML="Sorry! Director cannot be blank.............";
+			document.movieForm.director.focus();
+			return;
+		}
+
+		var posterv=document.movieForm.poster.value;
+		if(posterv.length==0){
+			var spanObj=document.getElementById("errorMessage");
+			spanObj.innerHTML="Sorry! poster cannot be blank.............";
+			document.movieForm.poster.focus();
+			return;
+		}
+
+		//Go ahead and submit your form data to the server
+		//means submit the form using JavaScipt
+		//document.movieForm.submit();
+			var formdata=new FormData(document.getElementById('movieForm'));
+			//send formdata using AJAX to the server
+			fetch('movieServlet', {
+				method: 'post',
+				body: formdata
+			}).then(function(response) {
+			    return response.text();
+			  }).then(function(text) { 
+			  	console.log(text); 
+			  	var spanObj=document.getElementById("errorMessage");
+				spanObj.innerHTML=text;
+				//This is used to clear form data using JavaScript
+				document.movieForm.reset();
+				//clearing the form data using javascript
+			  });
+
+		}
+  </script>
+</head>
+<body >
+<header style="background-color: #062f6d;height:30px;">
+</header>
+<div class="container">
+  <h2>Movie Page!</h2>
+  <a href="showMovies"><img src="img/movie.jpg" class="img-thumbnail" style="height: 100px;">Show Movies</a>
+  	<br/> 	<br/> 	
+  	<span id="errorMessage" style="color:red;font-size: 18px;">xxxxxxxxxx</span>	
+  	<br/> 
+  	<form id="movieForm" name="movieForm" action="movieServlet" method="post">
+			Title :
+			<input type="text" name="title" class="form-control" style="width: 50%" onkeydown="clearMessage();"> 	
+			<br/> 	
+			Year :
+			<select name="year"  class="form-control" style="width: 50%">
+					<option>2018</option>
+					<option>2019</option>
+					<option>2020</option>
+					<option>2021</option>
+					<option>2022</option>
+			</select>
+			<br/> 	
+				Director :
+			<input type="text" name="director" class="form-control" style="width: 50%" onkeydown="clearMessage();"> 	
+			<br/> 	
+			Language :
+			<select name="language"  class="form-control" style="width: 50%">
+					<option>English</option>
+					<option>Hindi</option>
+						<option>Russian</option>
+			</select>
+			<br/> 	
+			Poster :
+			<input type="text" name="poster" class="form-control" style="width: 80%" onkeydown="clearMessage();"> 	
+			<br/> 	
+				Story  :
+				<textarea  name="story" rows="4" cols=""  class="form-control" style="width: 50%"></textarea>
+			<br/> 	
+			<button type="button" class="btn btn-primary" onclick="validate();">Add Movie</button>
+	</form>
+	<hr/>
+	
+</div>
+
+</body>
+</html>
