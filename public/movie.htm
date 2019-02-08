@@ -42,10 +42,15 @@
 		//Go ahead and submit your form data to the server
 		//means submit the form using JavaScipt
 		//document.movieForm.submit();
-			var formdata=new FormData(document.getElementById('movieForm'));
+			//var formdata=new FormData(document.getElementById('movieForm'));
+			var formdata=$("#movieForm").serialize();
+			alert("(#(#(#" +formdata);
 			//send formdata using AJAX to the server
-			fetch('movieServlet', {
+			fetch('movies', {
 				method: 'post',
+				headers: {
+     		 'Content-Type': 'application/x-www-form-urlencoded'
+    		},
 				body: formdata
 			}).then(function(response) {
 			    return response.text();
@@ -70,7 +75,7 @@
   	<br/> 	<br/> 	
   	<span id="errorMessage" style="color:red;font-size: 18px;">xxxxxxxxxx</span>	
   	<br/> 
-  	<form id="movieForm" name="movieForm" action="movieServlet" method="post">
+  	<form id="movieForm" name="movieForm" action="movies" method="post">
 			Title :
 			<input type="text" name="title" class="form-control" style="width: 50%" onkeydown="clearMessage();"> 	
 			<br/> 	

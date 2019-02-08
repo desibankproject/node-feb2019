@@ -8,7 +8,7 @@ function searchMovie(){
 			return;
 		}else{
 			//load data using AJAX
-			fetch('searchMovies?title='+titlev).then(function(response) { 
+			fetch('fmovies?title='+titlev).then(function(response) { 
 				// Convert to JSON
 				return response.json();
 			}).then(function(movies) {
