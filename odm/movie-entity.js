@@ -13,6 +13,7 @@ var MovieSchema  = new mongoose.Schema({
     year: { type: String},
     story: { type: String},
     poster: { type: String},
+    imgdata:{ data: Buffer, contentType: String },
     language: { type: String},
     doe: {type: Date},
     dom: {type: Date},

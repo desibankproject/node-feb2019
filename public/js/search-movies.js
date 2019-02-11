@@ -62,10 +62,10 @@ function searchMovie(){
 	                	dynamicContents=dynamicContents+'<tbody>';
 	                    dynamicContents=dynamicContents+'<tr>';
 	                	dynamicContents=dynamicContents+'<td>';
-	                	var imageURL="posterServlet?mid="+item.mid;
+	                	var imageURL="image-loader?mid="+item._id;
 	                	dynamicContents=dynamicContents+'<img id="timage'+item.mid+'" src="'+imageURL+'" style="height: 200px;" class="img-thumbnail" >';
-	                	dynamicContents=dynamicContents+'<a href="javascript:openUpdatePoster('+item.mid+');"> <img id="cimage" src="img/change-image.png"  class="img-thumbnail" ></a>';
-	                	dynamicContents=dynamicContents+' <a href="javascript:openEditPopup('+item.mid+');"> <img id="etimage" src="img/edit.png" style="height: 60px;" class="img-thumbnail" ></a>';
+	                	dynamicContents=dynamicContents+'<a href="javascript:openUpdatePoster(\''+item.mid+'\');"> <img id="cimage" src="img/change-image.png"  class="img-thumbnail" ></a>';
+	                	dynamicContents=dynamicContents+' <a href="javascript:openEditPopup(\''+item.mid+'\');"> <img id="etimage" src="img/edit.png" style="height: 60px;" class="img-thumbnail" ></a>';
 	                        
 		                dynamicContents=dynamicContents+'</td>';
 	           			dynamicContents=dynamicContents+'</tr>';

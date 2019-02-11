@@ -7,10 +7,18 @@ var bodyParser=require('body-parser');
 //to generate unique id
 var uniqid = require('uniqid');
 
+
 var app = express(); //Instantiating Express
 //setting port number for  express
 app.set('port', process.env.PORT || 4000);
 
+
+//to upload file with node.js platform
+const fileUpload = require('express-fileupload');
+
+// default options
+//fileUpload() method will act as a middleware or you can filer
+app.use(fileUpload());
 
 //To read data from incoming html form
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +50,23 @@ app.get("/uploadMovie",function(req,res) {
 
 
 app.post("/movies",function(req,res) {
+
+    if (Object.keys(req.files).length == 0) {
+        //http status code = 400 means- input is not correct
+          var message={status:"fail",message:"File input is not there"};
+          return res.status(400).json(message);
+        //return res.status(400).send('No files were uploaded.');
+      }
+    
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+      let posterObject = req.files.poster;
+      console.log("Printing the image!!!!!!!!!!!!!");
+      console.log(posterObject.data);
+      var imageName=posterObject.name;
+   
+
+      console.log("__)@)@(@(@(@*(@*@*@*@*  fileName = "+imageName);
+
     //request.getParameter("title")
     //request.getParameter("director")
     //reading form data coming from request body
@@ -58,7 +83,12 @@ app.post("/movies",function(req,res) {
     movieEntity.year=movie.year;
     movieEntity.story=movie.story;
     movieEntity.language=movie.language;
-    movieEntity.poster=movie.poster;
+    //poster we are just saving image name
+    movieEntity.poster=imageName;
+
+    movieEntity.imgdata.data = posterObject.data;
+    movieEntity.imgdata.contentType = 'image/png';
+
     //setting unique id
     movieEntity.mid=uniqid();
     
@@ -86,6 +116,32 @@ app.get("/movies",function(req,res) {
         }
     });
 });  
+
+app.get('/image-loader', function (req, res, next) {
+    var _id=req.query.mid;
+     console.log("nagendra = "+_id);
+     if(_id==undefined){
+         return;
+     }
+      console.log("____Accessing the rowdi  _id = "+_id);
+
+      MovieEntity.findById(_id)
+         .then(movie => {
+             if(movie) {
+                 console.log("+_+__data is coming from the database!!!!!!!!!!!!!");
+                 console.log(movie);
+                 res.contentType(movie.imgdata.contentType);
+                 res.send(movie.imgdata.data);          
+             }
+         }).catch(err => {
+             if(err.kind === 'ObjectId') {
+                 return res.status(500).send({});                
+             }
+             return res.status(500).send({ });
+         });
+
+
+});
 
 
 app.get("/fmovies",function(req,res) {
