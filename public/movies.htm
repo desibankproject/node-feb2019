@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+           var row="";
+           fetch('movies',{
+               method:'get'
+           }).then(function(response){
+                return response.json();
+           }).then(function(movies){
+             //generate filters options
+             loadData(movies);
+           });
+    });
+
+
+    function deleteMovie(pmid){
+          fetch('delete-movie?mid='+pmid,{
+               method:'get'
+           }).then(function(response){
+                return response.json();
+           }).then(function(jresponse){
+             //generate filters options
+                console.log(jresponse);
+                //hiding particular row
+                $("#"+pmid).hide();
+
+           });
+
+    }
+   
+   
+    //add all movies to the movie table and store sets of language,year and director to local sotrage 
+      function loadData(movies) {
+         //add each records to a new row
+         var row="";
+         movies.data.forEach(item => {
+          var imageURL = "image-loader?mid=" + item._id;
+          //console.log(item);
+          row = row + "<tr class='record' id='"+item.mid+"'><td>" + item.title + "</td><td name='director'>" + item.director + "</td><td name='year'>" + item.year + "</td><td name='language'>" + item.language + "</td><td>" + item.story + "</td><td><img src=" + imageURL + " class='img-thumbnail' style='height: 100px;'></td><td><a href=" + "javascript:deleteMovie(\'" + item.mid + "\');" + ">Delete</a></td></tr>";
+          $('#movies-list').html(row);
+            
+         });  
+    }
+
+
+ 
+
+  
+
+ 
+  
+  
+  </script>
+</head>
+<body >
+<header style="background-color: #062f6d;height:30px;">
+</header>
+<div class="container">
+  <h2>Movie Page!</h2>
+  <a href="showMovies"><img src="img/movie.jpg" class="img-thumbnail" style="height: 100px;">Show Movies</a>
+    <br/>   <br/>   
+  <hr/>
+                
+    <!--filter-->
+    
+
+    <table class="table table-bordered" >
+        <tr><th>Title</th><th>Director</th><th>Year</th><th>Language</th><th>Story</th><th>Image</th><th>Action</th></tr>
+    <tbody id="movies-list">
+       
+    </tbody>
+  </table>
+
+  
+</div>
+
+</body>
+</html>

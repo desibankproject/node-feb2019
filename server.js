@@ -105,7 +105,6 @@ app.post("/movies",function(req,res) {
 });
 
 app.get("/movies",function(req,res) {
-
     MovieEntity.find({},function(err,ddata){
         if(err){
             var response={status:"fail",message:err};
@@ -139,10 +138,28 @@ app.get('/image-loader', function (req, res, next) {
              }
              return res.status(500).send({ });
          });
-
-
 });
 
+app.get('/delete-movie', function (req, res, next) {
+    var mid=req.query.mid;
+     console.log("nagendra = "+mid);
+     if(mid==undefined){
+         return;
+     }
+      console.log("____Accessing the rowdi  mid = "+mid);
+      MovieEntity.findOneAndRemove({mid: mid}, function(err){
+        if(err){
+            var response={status:"fail",message:err};
+            res.status(500).json(response);
+        }else{
+            const response = {
+                message: "Todo successfully deleted",
+                status: "success"
+            };
+            return res.status(200).send(response);
+        }
+      });
+});
 
 app.get("/fmovies",function(req,res) {
     var ptitle=req.query.title;
