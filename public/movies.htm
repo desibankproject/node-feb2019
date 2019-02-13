@@ -43,7 +43,7 @@
          //add each records to a new row
          var row="";
          movies.data.forEach(item => {
-          var imageURL = "image-loader?mid=" + item._id;
+          var imageURL = "movies/images/" + item._id;
           //console.log(item);
           row = row + "<tr class='record' id='"+item.mid+"'><td>" + item.title + "</td><td name='director'>" + item.director + "</td><td name='year'>" + item.year + "</td><td name='language'>" + item.language + "</td><td>" + item.story + "</td><td><img src=" + imageURL + " class='img-thumbnail' style='height: 100px;'></td><td><a href=" + "javascript:deleteMovie(\'" + item.mid + "\');" + ">Delete</a></td></tr>";
           $('#movies-list').html(row);
