@@ -28,7 +28,8 @@ app.use(express.json());
 //search-all-movies.htm
 app.use('/',express.static(__dirname + '/public'));
 
-
+//import for cors setting
+require('./utils/cors-allow')(app);
 
 //connecting to mongodb
 var mongodbConn=require('./utils/mongo-connect');

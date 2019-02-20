@@ -14,9 +14,9 @@ exports.addMovie=function(movie,callbak) {
     movieEntity.story=movie.story;
     movieEntity.language=movie.language;
     //poster we are just saving image name
-    movieEntity.poster=imageName;
+    movieEntity.poster="http://www.wiki-how.in/wp-content/uploads/2015/09/hero-movie-rating-review-box-office-collection-Sooraj-Pancholi-Athiya-Shetty.jpg";
 
-    movieEntity.imgdata.data = posterObject.data;
+    movieEntity.imgdata.data = movie.data;
     movieEntity.imgdata.contentType = 'image/png';
 
     //setting unique id

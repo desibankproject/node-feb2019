@@ -20,18 +20,35 @@ exports.addMovie=function(req,res) {
        console.log("__)@)@(@(@(@*(@*@*@*@*  fileName = "+imageName);
      //reading form data coming from request body
     var movie=req.body;
+    movie.data=posterObject.data;
+    movie.name=posterObject.name;
+    
     console.log(movie);
    //setting unique id
-    movieEntity.mid=uniqid();
+   movie.mid=uniqid();
     MovieDao.addMovie(movie,function(err){
         if(err){
             const response={status:"fail",message:err};
             res.status(500).json(response);
         }else{
             const message={status:"success",message:"Movie Record is uploaded successfully"};
-            return res.status(200).send(response);
+            return res.status(200).send(message);
         }
     });
+};
+
+exports.tfindMovies=function(req,res) {
+    var search=req.query.search;
+    MovieDao.findMovies(search,function(err,ddata){
+            if(err){
+                var response={status:"fail",message:err};
+                res.json(response);
+            }else{
+               // var response={status:"success",data:ddata};
+                res.json(ddata);
+            }
+        });
+    
 };
 
 exports.findMovies=function(req,res) {
