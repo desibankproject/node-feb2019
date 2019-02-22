@@ -14,8 +14,12 @@ exports.addMovie=function(movie,callbak) {
     movieEntity.story=movie.story;
     movieEntity.language=movie.language;
     //poster we are just saving image name
-    movieEntity.poster="http://www.wiki-how.in/wp-content/uploads/2015/09/hero-movie-rating-review-box-office-collection-Sooraj-Pancholi-Athiya-Shetty.jpg";
-
+    //if(movie.poster==undefined){
+        movieEntity.poster="http://www.wiki-how.in/wp-content/uploads/2015/09/hero-movie-rating-review-box-office-collection-Sooraj-Pancholi-Athiya-Shetty.jpg";
+   // }else{
+        //movieEntity.poster=movie.poster;
+   // }
+    
     movieEntity.imgdata.data = movie.data;
     movieEntity.imgdata.contentType = 'image/png';
 
@@ -37,6 +41,15 @@ exports.findMovies=function(search,callbak) {
             callbak(err,data);
     });
     }
+}  
+
+
+exports.findMovieById=function(_mid,callbak) {
+        MovieEntity.findById(_mid,function(err,data){
+                 callbak(err,data);
+          });
+    
+    
 }  
 
 

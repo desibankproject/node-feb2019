@@ -65,6 +65,21 @@ exports.findMovies=function(req,res) {
         
 };
 
+
+
+
+exports.findMovieById=function(req,res) {
+    var mid=req.params.mid;
+    MovieDao.findMovieById(mid,function(err,movie){
+        if(err){
+            const response={status:"fail",message:err};
+            res.status(500).json(response);
+        }else{
+            res.send(movie);         
+        }
+    });
+};
+
 //
 exports.findMovieImageByMid=function(req,res) {
     var mid=req.params.mid;
