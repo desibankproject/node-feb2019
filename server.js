@@ -35,7 +35,16 @@ require('./utils/cors-allow')(app);
 var mongodbConn=require('./utils/mongo-connect');
 mongodbConn();
 
-require('./routes/movies-mapping')(app);
+///This is imported here
+//profile-mapping file contains function definition 
+var endPoint = express.Router();
+//below is change because of versioning in rest
+//require('./routes/movies-mapping')(app);
+require('./routes/movies-mapping')(endPoint);
+
+//here endpoint will be prefix with  v1
+app.use('/api/v3', endPoint);
+
 
 //Hey create one http server using app setting on which 
 //port number define inside express!
