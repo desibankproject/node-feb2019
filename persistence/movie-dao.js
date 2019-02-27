@@ -26,8 +26,8 @@ exports.addMovie=function(movie,callbak) {
     //setting unique id
     movieEntity.mid=movie.mid;
     
-    movieEntity.save(function(err){
-        callbak(err);
+    movieEntity.save(function(err,data){
+        callbak(err,data);
     });
 }
 

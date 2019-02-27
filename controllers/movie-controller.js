@@ -26,12 +26,14 @@ exports.addMovie=function(req,res) {
     console.log(movie);
    //setting unique id
    movie.mid=uniqid();
-    MovieDao.addMovie(movie,function(err){
+    MovieDao.addMovie(movie,function(err,data){
         if(err){
             const response={status:"fail",message:err};
             res.status(500).json(response);
         }else{
-            const message={status:"success",message:"Movie Record is uploaded successfully"};
+            console.log("data");
+           // console.log(data);
+            const message={status:"success",message:"Movie Record is uploaded successfully",_id:data._id};
             return res.status(200).send(message);
         }
     });
